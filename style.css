@@ -4,9 +4,12 @@
 * {
     box-sizing: border-box;
 }
+
 html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
 }
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -14,6 +17,11 @@ body {
     background-color: white;
     overflow-x: hidden;
 }
+
+img {
+    max-width: 100%;
+}
+
 button, a {
     font-family: inherit;
 }
@@ -23,13 +31,14 @@ button, a {
 ================================================== */
 .nav {
     width: 100%;
-    height: 70px;
-    position: relative;
+    min-height: 70px;
     display: flex;
     align-items: center;
-    padding: 0 30px;
+    gap: 18px;
+    padding: 10px 30px;
     background-color: white;
     border-bottom: 1px solid #eeeeee;
+    position: relative;
     z-index: 100;
     animation: navEnter 0.7s ease forwards;
 }
@@ -39,7 +48,7 @@ button, a {
 }
 
 .navimg {
-    height: 70px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
 }
@@ -54,21 +63,19 @@ button, a {
 }
 
 .contentnav {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    width: 350px;
-    height: 70px;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 34px;
     font-weight: bold;
     font-size: 14px;
 }
 .contentnav span {
     position: relative;
     cursor: pointer;
+    white-space: nowrap;
     transition: color 0.25s ease, transform 0.25s ease;
 }
 .contentnav span:hover {
@@ -94,12 +101,10 @@ button, a {
 }
 
 .container1 {
-    position: absolute;
-    right: 30px;
-    top: 0;
-    height: 70px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
+    margin-left: auto;
     animation: loginEnter 0.8s ease 0.2s forwards;
     opacity: 0;
 }
@@ -132,6 +137,40 @@ button, a {
     font-size: 13px;
 }
 
+/* ---------- Hamburger ---------- */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    margin-left: 4px;
+    border: 1px solid #e9e9e9;
+    border-radius: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.hamburger:hover {
+    background-color: #fff5f5;
+    border-color: #fecaca;
+}
+.hamburger span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background-color: #111;
+    transition: transform 0.3s ease, opacity 0.25s ease;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 /* ==================================================
    HERO
 ================================================== */
@@ -141,6 +180,7 @@ button, a {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    gap: 30px;
     padding: 55px 7% 35px;
     position: relative;
     overflow: hidden;
@@ -149,6 +189,7 @@ button, a {
 .heroText {
     position: relative;
     z-index: 5;
+    min-width: 0;
     animation: heroTextEnter 0.9s ease forwards;
 }
 @keyframes heroTextEnter {
@@ -168,7 +209,7 @@ button, a {
 }
 .hero h1 {
     margin: 0;
-    font-size: clamp(55px, 5.7vw, 88px);
+    font-size: clamp(38px, 6vw, 88px);
     line-height: 0.94;
     font-weight: 800;
     letter-spacing: -3px;
@@ -186,6 +227,7 @@ button, a {
 }
 .heroButtons {
     display: flex;
+    flex-wrap: wrap;
     gap: 14px;
     margin-top: 28px;
 }
@@ -198,25 +240,22 @@ button, a {
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
 }
-.getStarted {
+
+/* Get Started styles removed — Explore Courses now uses the same red style */
+.exploreCourses {
     border: none;
     background-color: #e80000;
     color: white;
 }
-.getStarted:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(232, 0, 0, 0.25);
-}
-.exploreCourses {
-    border: 1px solid #222;
-    background-color: white;
-    color: #111;
-}
 .exploreCourses:hover {
     transform: translateY(-3px);
-    background-color: #111;
-    color: white;
+    background-color: #c90000;
+    box-shadow: 0 10px 25px rgba(232, 0, 0, 0.25);
 }
+.exploreCourses:active {
+    transform: translateY(0);
+}
+
 .heroFeatures {
     display: flex;
     flex-wrap: wrap;
@@ -232,7 +271,8 @@ button, a {
 ================================================== */
 .heroImage {
     position: relative;
-    height: 550px;
+    height: clamp(300px, 44vw, 550px);
+    min-width: 0;
     display: flex;
     align-items: flex-end;
     justify-content: center;
@@ -244,18 +284,20 @@ button, a {
 }
 .circle {
     position: absolute;
-    width: 440px;
-    height: 440px;
+    width: min(80%, 440px);
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background-color: #ffe0e0;
-    top: 34px;
-    right: 22%;
+    top: 6%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .heroImage img {
     position: relative;
     z-index: 2;
-    height: 535px;
+    height: 100%;
     width: auto;
+    max-width: 100%;
     object-fit: contain;
     filter: drop-shadow(0 20px 25px rgba(0, 0, 0, 0.12));
     transition: transform 0.4s ease;
@@ -271,7 +313,8 @@ button, a {
     display: flex;
     flex-direction: column;
     padding: 13px 20px;
-    min-width: 185px;
+    width: max-content;
+    max-width: 90%;
     background-color: white;
     border-left: 4px solid #e80000;
     border-radius: 10px;
@@ -294,7 +337,7 @@ button, a {
     margin: -5px auto 40px;
     padding: 18px 25px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
     background-color: white;
     border-radius: 15px;
@@ -309,11 +352,13 @@ button, a {
     gap: 13px;
     padding: 12px;
     border-right: 1px solid #eeeeee;
+    min-width: 0;
 }
 .stat:last-child { border-right: none; }
 .statIcon {
     width: 45px;
     height: 45px;
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -332,6 +377,7 @@ button, a {
     text-align: center;
     max-width: 800px;
     margin: 0 auto 48px;
+    padding: 0 6px;
 }
 .sectionLabel {
     display: inline-block;
@@ -347,7 +393,7 @@ button, a {
 }
 .sectionHeading h2 {
     margin: 0;
-    font-size: clamp(34px, 4.2vw, 46px);
+    font-size: clamp(28px, 4.2vw, 46px);
     letter-spacing: -1.2px;
     font-weight: 800;
     color: #111;
@@ -355,8 +401,8 @@ button, a {
 .sectionHeading h2 .red-title {
     color: #e50914;
 }
-.grey-title{
-    color:#000000;
+.grey-title {
+    color: #000000;
 }
 .sectionHeading p {
     margin-top: 14px;
@@ -366,7 +412,7 @@ button, a {
 }
 
 /* ==================================================
-   COURSES VIEW (PIXEL MATCHED & ANIMATED)
+   COURSES VIEW
 ================================================== */
 .courses {
     padding: 60px 7% 90px;
@@ -383,7 +429,6 @@ button, a {
     margin: 0 auto;
 }
 
-/* Course Card */
 .courseCard {
     background: #ffffff;
     border: 1px solid #edf0f5;
@@ -393,13 +438,13 @@ button, a {
     display: flex;
     flex-direction: column;
     position: relative;
+    min-width: 0;
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s ease;
     animation: courseCardFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-/* Stagger entrance */
 .courseCard:nth-child(1) { animation-delay: 0.04s; }
 .courseCard:nth-child(2) { animation-delay: 0.08s; }
 .courseCard:nth-child(3) { animation-delay: 0.12s; }
@@ -426,7 +471,6 @@ button, a {
     border-color: #fca5a5;
 }
 
-/* Top Icon Container */
 .courseIconWrap {
     margin-bottom: 16px;
 }
@@ -452,7 +496,6 @@ button, a {
     transition: transform 0.35s ease;
 }
 
-/* Card Body (Text on Left, Arrow on Right) */
 .cardBody {
     display: flex;
     align-items: center;
@@ -463,6 +506,7 @@ button, a {
 }
 .cardText {
     flex: 1;
+    min-width: 0;
 }
 .cardText h3 {
     margin: 0 0 7px 0;
@@ -478,7 +522,6 @@ button, a {
     color: #666;
 }
 
-/* Arrow Circle Button */
 .cardArrow {
     width: 38px;
     height: 38px;
@@ -509,10 +552,10 @@ button, a {
     transform: translateX(3px);
 }
 
-/* Card Footer */
 .cardFooter {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 12px;
     margin-top: auto;
     padding-top: 15px;
@@ -529,6 +572,7 @@ button, a {
 .footer-icon-sub {
     width: 15px;
     height: 15px;
+    flex: 0 0 auto;
     color: #999;
     transition: color 0.25s ease, transform 0.25s ease;
 }
@@ -544,7 +588,6 @@ button, a {
 /* ==================================================
    SVG MICRO-ANIMATIONS
 ================================================== */
-/* 1. Book Page Flutter (Classes 8th to 12th) */
 .book-svg .left-page,
 .book-svg .right-page {
     transition: transform 0.3s ease;
@@ -566,7 +609,6 @@ button, a {
     100% { transform: rotate(5deg) translateY(-0.8px); }
 }
 
-/* 2. Chemistry Flask Bubbles & Liquid (JEE) */
 .flask-bubble {
     opacity: 0.6;
     transition: all 0.3s ease;
@@ -594,7 +636,6 @@ button, a {
     50% { transform: rotate(2.5deg) scaleY(1.05); }
 }
 
-/* 3. Medical Cross & Ring Pulse (NEET) */
 .med-circle {
     transition: stroke-width 0.3s ease, opacity 0.3s ease;
 }
@@ -617,7 +658,6 @@ button, a {
     50% { stroke-width: 2.7; opacity: 0.7; }
 }
 
-/* 4. Grid Tiles Bounce (All Subjects) */
 .grid-tile {
     transition: transform 0.3s ease;
 }
@@ -642,7 +682,6 @@ button, a {
     100% { transform: scale(0.85); }
 }
 
-/* 5. Location Pin & User micro-animations */
 .courseCard:hover .pin-icon {
     animation: pinHop 0.8s ease-in-out infinite;
 }
@@ -662,6 +701,7 @@ button, a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 25px;
     border-radius: 16px;
     background-color: #fff4f4;
@@ -693,11 +733,12 @@ button, a {
     50% { transform: translateY(-3px) rotate(-4deg); }
 }
 .courses-cta .cta-content {
-    flex-grow: 1;
+    flex: 1 1 260px;
+    min-width: 0;
 }
 .courses-cta h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: clamp(20px, 2.4vw, 24px);
     font-weight: 800;
     color: #111;
 }
@@ -758,6 +799,7 @@ button, a {
 .benefit {
     text-align: center;
     padding: 10px 25px;
+    min-width: 0;
 }
 .benefitIcon {
     width: 55px;
@@ -787,7 +829,7 @@ button, a {
     align-items: center;
 }
 .facultyImage {
-    height: 430px;
+    height: clamp(300px, 38vw, 430px);
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -795,27 +837,37 @@ button, a {
     overflow: hidden;
     border-radius: 20px;
     background-color: #fff2f2;
+    min-width: 0;
 }
 .facultyCircle {
     position: absolute;
-    width: 310px;
-    height: 310px;
+    width: min(75%, 310px);
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     background-color: #ffdede;
     top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 .facultyImage img {
     position: relative;
     z-index: 2;
-    height: 400px;
+    height: 100%;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
 }
-.facultyText h2 { margin: 5px 0; font-size: 40px; }
+.facultyText { min-width: 0; }
+.facultyText h2 {
+    margin: 5px 0;
+    font-size: clamp(26px, 3.6vw, 40px);
+}
 .facultyText h3 { margin: 5px 0 20px; color: #e80000; font-size: 17px; }
 .facultyText p { color: #666; font-size: 15px; line-height: 1.7; }
 .facultyStats {
     display: flex;
-    gap: 35px;
+    flex-wrap: wrap;
+    gap: 22px 35px;
     margin-top: 30px;
 }
 .facultyStats strong { display: block; font-size: 18px; }
@@ -840,6 +892,7 @@ button, a {
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 7px 20px rgba(0, 0, 0, 0.06);
+    min-width: 0;
 }
 .studentCircle {
     width: 45px;
@@ -869,6 +922,7 @@ button, a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 30px;
     border-radius: 12px;
     background-color: #fff0f0;
@@ -886,15 +940,16 @@ button, a {
     background-color: white;
     color: #e80000;
     font-size: 28px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     flex-shrink: 0;
 }
 #home-view .cta-content {
-    flex-grow: 1;
+    flex: 1 1 260px;
+    min-width: 0;
 }
 #home-view .cta h2 {
     margin: 0;
-    font-size: 26px;
+    font-size: clamp(20px, 2.4vw, 26px);
     font-weight: 800;
 }
 #home-view .cta h2 .red-title {
@@ -960,6 +1015,7 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 11px;
+    min-width: 0;
 }
 .footerColumn h3 {
     margin: 0 0 5px;
@@ -976,6 +1032,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 8px;
+    overflow-wrap: anywhere;
 }
 .footer-icon {
     width: 15px;
@@ -1008,72 +1065,6 @@ footer {
 }
 
 /* ==================================================
-   RESPONSIVE DESIGN
-================================================== */
-@media (max-width: 1150px) {
-    .courseGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .courses-cta {
-        padding: 24px 25px;
-    }
-}
-
-@media (max-width: 950px) {
-    .contentnav { width: 300px; }
-    .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        padding: 50px 25px;
-    }
-    .heroText {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .heroImage {
-        margin-top: 20px;
-        height: 500px;
-    }
-    .circle {
-        right: 50%;
-        transform: translateX(50%);
-    }
-    .teacherTag { right: 5%; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .benefits { grid-template-columns: repeat(2, 1fr); }
-    .faculty {
-        grid-template-columns: 1fr;
-        padding: 30px;
-    }
-    .testimonialGrid {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-    }
-    footer { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 680px) {
-    .nav { padding: 0 15px; }
-    .navimg img { height: 38px; }
-    .contentnav { display: none; }
-    .container1 { right: 15px; }
-    .login { width: 115px; height: 43px; }
-    
-    .courseGrid {
-        grid-template-columns: 1fr;
-    }
-    .courses-cta {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-        padding: 25px 20px;
-    }
-    .cta-enquire-btn {
-        width: 100%;
-    }
-}
-/* ==================================================
    MEET OUR TOPPERS SECTION
 ================================================== */
 .toppers {
@@ -1083,18 +1074,15 @@ footer {
     position: relative;
 }
 
-/* Slider Viewport */
 .topper-slider {
     width: 100%;
     overflow: hidden;
     position: relative;
     padding: 15px 0;
-    /* Soft edge fade so cards transition seamlessly at screen boundaries */
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
 }
 
-/* Flexbox Carousel Track (Continuous Left-Moving Animation) */
 .topper-track {
     display: flex;
     width: max-content;
@@ -1104,7 +1092,6 @@ footer {
     animation: marqueeToppers 34s linear infinite;
 }
 
-/* Pause animation on hover so visitors can comfortably inspect individual cards */
 .topper-slider:hover .topper-track {
     animation-play-state: paused;
 }
@@ -1118,7 +1105,6 @@ footer {
     }
 }
 
-/* Individual Topper Card */
 .topper-card {
     flex: 0 0 300px;
     background-color: #ffffff;
@@ -1139,7 +1125,6 @@ footer {
     border-color: #fca5a5;
 }
 
-/* Header: Avatar & Info */
 .topper-header {
     display: flex;
     align-items: center;
@@ -1187,7 +1172,6 @@ footer {
     font-weight: 500;
 }
 
-/* Score / Achievement Pill Badge */
 .topper-badge {
     display: inline-flex;
     align-items: center;
@@ -1210,7 +1194,6 @@ footer {
     flex-shrink: 0;
 }
 
-/* Quote / Summary Statement */
 .topper-quote {
     margin: 0;
     font-size: 13.5px;
@@ -1218,18 +1201,233 @@ footer {
     color: #555555;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    .toppers {
-        padding: 55px 0 65px;
+/* ==================================================
+   RESPONSIVE — LARGE LAPTOPS (≤1200px)
+================================================== */
+@media (max-width: 1200px) {
+    .nav { padding: 10px 24px; }
+    .contentnav { gap: 26px; }
+
+    .hero { padding: 50px 5% 30px; gap: 24px; }
+
+    .courses { padding: 55px 5% 80px; }
+    .whyUs, .testimonials { padding: 70px 5%; }
+
+    .faculty { padding: 40px; gap: 40px; }
+
+    #home-view .cta { padding: 26px 30px; }
+    footer { padding: 50px 5% 22px; gap: 35px; }
+}
+
+/* ==================================================
+   RESPONSIVE — TABLETS (≤1024px)
+================================================== */
+@media (max-width: 1024px) {
+
+    .hamburger { display: flex; }
+
+    .contentnav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        background-color: #ffffff;
+        border-bottom: 1px solid #eeeeee;
+        box-shadow: 0 16px 28px rgba(0, 0, 0, 0.08);
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        transition: max-height 0.35s ease, opacity 0.3s ease, visibility 0.35s;
     }
-    .topper-card {
-        flex: 0 0 260px;
-        padding: 20px 18px;
+    .contentnav.open {
+        max-height: 320px;
+        opacity: 1;
+        visibility: visible;
     }
-    .topper-track {
+    .contentnav span {
+        padding: 15px 24px;
+        font-size: 15px;
+        border-bottom: 1px solid #f4f4f4;
+    }
+    .contentnav span:last-child { border-bottom: none; }
+    .contentnav span::after { display: none; }
+    .contentnav span:hover {
+        transform: none;
+        background-color: #fff6f6;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 45px 24px 25px;
+        gap: 10px;
+        min-height: 0;
+    }
+    .heroText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .smalldefi { margin-left: auto; margin-right: auto; }
+    .heroButtons { justify-content: center; }
+    .heroFeatures { justify-content: center; }
+
+    .heroImage {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        height: clamp(300px, 52vw, 460px);
+    }
+    .teacherTag { right: 0; bottom: 6%; }
+
+    .courseGrid { grid-template-columns: repeat(2, 1fr); }
+
+    .faculty {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 30px;
+        text-align: center;
+    }
+    .facultyText { max-width: 620px; margin: 0 auto; }
+    .facultyStats { justify-content: center; }
+    .facultyImage {
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+    }
+
+    footer { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+/* ==================================================
+   RESPONSIVE — SMALL TABLETS / LARGE PHONES (≤720px)
+================================================== */
+@media (max-width: 720px) {
+
+    .whyUs { padding: 55px 20px; }
+    .testimonials { padding: 55px 20px; }
+    .courses { padding: 45px 20px 65px; }
+    .sectionHeading { margin-bottom: 34px; }
+
+    /* Stats stay in ONE row — scale content down instead */
+    .stats {
+        width: 94%;
+        padding: 14px 12px;
+        gap: 4px;
+    }
+    .stat {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+        padding: 10px 4px;
+        border-right: 1px solid #eeeeee;
+        border-bottom: none;
+    }
+    .stat:last-child { border-right: none; }
+    .statIcon {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+    }
+    .statIcon .ui-icon { width: 20px; height: 20px; }
+    .stat strong { font-size: 14px; }
+    .stat span { font-size: 10.5px; line-height: 1.25; }
+
+    .benefits { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .benefit { padding: 10px 14px; }
+
+    .testimonialGrid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+
+    .courses-cta,
+    #home-view .cta {
+        flex-direction: column;
+        text-align: center;
+        padding: 26px 22px;
         gap: 16px;
-        padding-right: 16px;
-        animation-duration: 26s;
     }
+    .courses-cta .cta-content,
+    #home-view .cta-content { text-align: center; }
+
+    .cta-enquire-btn,
+    #home-view .cta button { width: 100%; }
+
+    .faculty { padding: 22px; }
+}
+
+/* ==================================================
+   RESPONSIVE — SMALL PHONES (≤520px)
+================================================== */
+@media (max-width: 520px) {
+
+    .nav { padding: 8px 14px; gap: 10px; }
+    .navimg img { height: 36px; }
+    .login { width: 112px; height: 42px; border-radius: 10px; }
+    .loginfont { font-size: 12px; }
+    .hamburger { width: 38px; height: 38px; }
+
+    .hero { padding: 35px 16px 20px; }
+    .hero h1 {
+        font-size: clamp(34px, 11vw, 46px);
+        letter-spacing: -1.5px;
+    }
+    .eyebrow { font-size: 10px; padding: 6px 11px; letter-spacing: 0.5px; }
+    .smalldefi { font-size: 15px; margin-top: 18px; }
+
+    .heroButtons {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .heroButtons button { width: 100%; }
+
+    .heroFeatures { gap: 14px; font-size: 12.5px; margin-top: 20px; }
+    .heroImage { height: clamp(260px, 74vw, 340px); }
+    .teacherTag { padding: 10px 14px; bottom: 4%; }
+    .teacherTag strong { font-size: 14px; }
+
+    /* Stats still one row on small phones */
+    .stats {
+        width: 96%;
+        padding: 12px 8px;
+        gap: 2px;
+    }
+    .stat {
+        padding: 8px 2px;
+        gap: 5px;
+        border-right: 1px solid #eeeeee;
+        border-bottom: none;
+    }
+    .stat:last-child { border-right: none; }
+    .statIcon {
+        width: 30px;
+        height: 30px;
+    }
+    .statIcon .ui-icon { width: 17px; height: 17px; }
+    .stat strong { font-size: 12.5px; }
+    .stat span { font-size: 9.5px; }
+
+    .sectionHeading h2 { font-size: clamp(25px, 7.6vw, 32px); }
+    .sectionHeading p { font-size: 14.5px; }
+
+    .courseGrid { grid-template-columns: 1fr; gap: 16px; }
+    .courseCard { padding: 20px 18px 18px; }
+    .cardText h3 { font-size: 17.5px; }
+
+    .benefits { grid-template-columns: 1fr; }
+
+    .faculty { padding: 18px; gap: 24px; }
+    .facultyStats { gap: 18px 26px; }
+    .facultyStats strong { font-size: 16px; }
+
+    .toppers { padding: 55px 0 65px; }
+    .topper-card { flex: 0 0 250px; padding: 20px 18px; }
+    .topper-track { gap: 16px; padding-right: 16px; animation-duration: 26s; }
+
+    footer { grid-template-columns: 1fr; gap: 26px; padding: 40px 20px 18px; }
+    .footerBrand p { max-width: 100%; }
 }
